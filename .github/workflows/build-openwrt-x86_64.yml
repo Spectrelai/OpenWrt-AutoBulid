@@ -128,20 +128,20 @@ jobs:
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
 
+    - name: Upload to release
+      uses: JasonEtco/upload-to-release@master
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        args: ${{ env.FIRMWARE }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
+
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}
         path: ${{ env.FIRMWARE }}
-
-    - name: Upload to release
-      uses: JasonEtco/upload-to-release@master
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        args: ${{ env.FIRMWARE }} application/zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
 
     - name: Upload firmware to cowtransfer
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
