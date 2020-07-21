@@ -9,9 +9,9 @@ on:
   repository_dispatch:
   release:
     types: published
-  push:
-    tags:
-      - *
+#  push:
+#    tags:
+#      - '*'
 #    paths:
 #      - '.config'
 #  schedule:
