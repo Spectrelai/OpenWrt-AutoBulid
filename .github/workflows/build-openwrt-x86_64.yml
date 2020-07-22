@@ -129,7 +129,7 @@ jobs:
 
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
-      if: steps.organize.outputs.status == 'success' && github.event == 'release' && !cancelled()
+      if: steps.organize.outputs.status == 'success' && github.event_name == 'release' && !cancelled()
       with:
         args: ${{ env.FIRMWARE }}
       env:
