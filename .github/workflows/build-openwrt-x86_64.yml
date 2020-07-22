@@ -125,7 +125,7 @@ jobs:
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "::set-env name=FIRMWARE::$GITHUB_WORKSPACE/OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}.zip"
-        zip ${{ env.FIRMWARE }} $PWD
+        zip ${{ env.FIRMWARE }} *
         echo "::set-output name=status::success"
 
     - name: Upload to release
