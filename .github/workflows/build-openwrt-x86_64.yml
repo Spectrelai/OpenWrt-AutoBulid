@@ -124,7 +124,8 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
-        echo "::set-env name=FIRMWARE::$PWD"
+        echo "::set-env name=FIRMWARE::${ GITHUB_WORKSPACE }/OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}.zip"
+        zip ${{ env.FIRMWARE }} $PWD
         echo "::set-output name=status::success"
 
     - name: Upload to release
@@ -139,7 +140,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}
+        name: firmware-artifact
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to cowtransfer
