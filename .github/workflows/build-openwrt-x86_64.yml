@@ -124,8 +124,9 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
-        echo "::set-env name=FIRMWARE::${{ github.workspace }}/OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}.zip"
-        zip -r ${FIRMWARE} ./
+        export FIRMWARE=${GITHUB_WORKSPACE}/OpenWrt_firmware${DEVICE_NAME}${FILE_DATE}.zip
+        zip -r $FIRMWARE ./
+        echo "::set-env name=FIRMWARE::$FIRMWARE"
         echo "::set-output name=status::success"
 
     - name: Upload Release Asset
