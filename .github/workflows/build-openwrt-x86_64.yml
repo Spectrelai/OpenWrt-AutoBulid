@@ -40,7 +40,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: Initialization environment
       env:
@@ -105,17 +105,17 @@ jobs:
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "::set-env name=DEVICE_NAME::_$(cat DEVICE_NAME)"
-        echo "::set-env name=RELEASE_VERSION::_$(echo ${{ github.ref }})"
+        echo "::set-env name=FILE_DATE::_$(date +"%Y%m%d%H%M")"
 
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
 
     - name: Upload bin directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
 
     - name: Organize files
@@ -124,20 +124,23 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
-        echo "::set-env name=FIRMWARE::$GITHUB_WORKSPACE/OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_VERSION }}.zip"
-        zip ${{ env.FIRMWARE }} *
+        echo "::set-env name=FIRMWARE::${{ github.workspace }}/OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}.zip"
+        zip -r ${FIRMWARE} ./
         echo "::set-output name=status::success"
 
-    - name: Upload to release
-      uses: JasonEtco/upload-to-release@master
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@main
       if: steps.organize.outputs.status == 'success' && github.event_name == 'release' && !cancelled()
-      with:
-        args: ${{ env.FIRMWARE }}
       env:
         GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ env.FIRMWARE }}
+        asset_name: OpenWrt_firmware${{ env.DEVICE_NAME }}_${{ github.event.release.tag_name }}.zip
+        asset_content_type: application/zip
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: firmware-artifact
