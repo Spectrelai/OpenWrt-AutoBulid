@@ -11,8 +11,7 @@ sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
 
 # Create custom packages
-cd $GITHUB_WORKSPACE && mkdir customfeed && cd customfeed
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-adguardhome
-
+mkdir $GITHUB_WORKSPACE/customfeed
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-adguardhome $GITHUB_WORKSPACE/customfeed/luci-app-adguardhome
 # Add custom feed
 sed -i '$a src-link customfeed '"$GITHUB_WORKSPACE"'/customfeed' feeds.conf.default
