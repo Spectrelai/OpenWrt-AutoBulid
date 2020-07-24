@@ -1,7 +1,7 @@
 # OpenWrt-AutoBulid
 
-Build OpenWrt using GitHub Actions base on [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
-Source: [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
+Build OpenWrt using GitHub Actions base on [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)  
+Build Source: [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
 
 ## Changes
 
