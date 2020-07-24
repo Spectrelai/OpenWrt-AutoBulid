@@ -12,30 +12,23 @@ Build Source: [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
 
 ### X86_64
 
-> <b>Img</b>: 128M Boot, 512M Root
-> 
-> <b>Base</b>: IPv6, WireGuard, 9P Net, Intel AC9560 Support
-> 
+> <b>Img</b>: 128M Boot, 512M Root  
+> <b>Base</b>: IPv6, WireGuard, 9P Net, Intel AC9560 Support  
+> <b>Theme</b>: Argon, Argon Dark, Argon Light, BootStrap Mod  
 > <b>Luci App</b>:
-> 
 > - AD Block: Adguard Home
 > - Tool:     Commands, File Browser, NLBW
 > - Proxy:    Frpc, Frps, ZeroTier, IPSec VPN, PPTP VPN, Passwall, SSR Plus
 > - Network:  SQM Qos, DDNS, UPnP, SFE Turbo ACC
-> 
-> <b>Theme</b>: Argon, Argon Dark, Argon Light, BootStrap Mod
 
 ### Redmi AC2100
 
-> <b>Base</b>: IPv6, WireGuard, MT7615d Driver
-> 
+> <b>Base</b>: IPv6, WireGuard, MT7615d Driver  
+> <b>Theme</b>: Argon, Argon Dark, BootStrap Mod  
 > <b>Luci App</b>:
-> 
 > - Tool:     Commands, NLBW
 > - Proxy:    Frpc, ZeroTier, IPSec VPN, PPTP VPN, SSR Plus
 > - Network:  SQM Qos, DDNS, UPnP, FlowOffload Turbo ACC
-> 
-> <b>Theme</b>: Argon, Argon Dark, BootStrap Mod
 
 ## Thanks
 
